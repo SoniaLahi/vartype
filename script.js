@@ -453,11 +453,11 @@ function loop() {
     }
 }
 
-function Click() {
+function onClick() {
     onKeyPressed(" ");
 }
 
-function keyboard(event) {
+function onKeyboard(event) {
     onKeyPressed(event.key);
 }
 
