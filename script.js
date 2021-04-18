@@ -1,6 +1,6 @@
 var k = false;
 var intervalId = setInterval(loop, 20);
-var touch = false, t = 0, sldr, r, lvl = 0, step = 0, score = [], penalty = [], prm = [], str, mode = 0, fonttype, vari = 0, totalscore, waitinput = false,
+var touch = false, t = 0, sldr, r, currentLevel = 0, step = 0, score = [], penalty = [], prm = [], str, mode = 0, fonttype, vari = 0, totalscore, waitinput = false,
     fontscore = [], page;
 var font = ['Roboto', 'RobotoMono', 'EBGaramond-VariableFont_wght', 'Quicksand-VariableFont_wght', 'Hagrid-Variable-trial', 'Minerale-variable-TRIAL', 'InterVar', 'Blacker-Sans-Variable-trial', 'GTFlexa', 'Compressa'];
 var lvlname = ['Roboto', 'RobotoMono', 'EBGaramond', 'Quicksand', 'Hagrid', 'Minérale', 'Inter', 'Blacker', 'GTFlexa', 'Compressa', 'Random'];
@@ -27,11 +27,11 @@ function loop() {
             break;
         case 2:
             //Play Game
-            level(lvl);
+            level(currentLevel);
             break;
         case 3:
-            continueLevel(lvl < 4);
-            if (step == Math.max(1, Math.min(lvl, 4))) {
+            continueLevel(currentLevel < 4);
+            if (step == Math.max(1, Math.min(currentLevel, 4))) {
                 mode++;
                 k = false;
             }
@@ -59,11 +59,11 @@ function loop() {
         penalty = [];
         document.getElementById("game").style.filter = "none";
         document.getElementById("headerready").style.display = "flex";
-        document.getElementById("headerready").children[1].children[0].innerHTML = "Level " + lvl;
+        document.getElementById("headerready").children[1].children[0].innerHTML = "Level " + currentLevel;
         document.getElementById("affiche").innerHTML = "Ready?";
         document.getElementById("affiche").style.opacity = 1;
         document.getElementById("slider").style.opacity = 1;
-        if (lvl == 0) {
+        if (currentLevel == 0) {
             document.getElementById("spacebar").innerHTML = "Touch the <strong>(screen)</strong><br>or Press <strong>(spacebar)</strong><br> to start";
         } else if (touch) {
             document.getElementById("spacebar").innerHTML = "Touch the <strong>(screen)</strong><br>to start";
@@ -84,8 +84,8 @@ function loop() {
             t = -200;
             document.getElementById("headerready").style.display = "none";
             document.getElementById("headerlevel").style.display = "flex";
-            document.getElementById("headerlevel").children[0].children[0].innerHTML = "Level " + lvl;
-            document.getElementById("headerlevel").children[0].children[1].innerHTML = 0 + "/" + Math.max(1, Math.min(lvl, 4));
+            document.getElementById("headerlevel").children[0].children[0].innerHTML = "Level " + currentLevel;
+            document.getElementById("headerlevel").children[0].children[1].innerHTML = 0 + "/" + Math.max(1, Math.min(currentLevel, 4));
         }
         if (k == "s" || k == "S") {
             document.getElementById("headerready").style.display = "none";
@@ -120,7 +120,7 @@ function loop() {
                     waitinput = [" "];
                     stopInterval();
                 } else {
-                    document.getElementsByClassName("textpar")[lvl].children[step].style.display = "block";
+                    document.getElementsByClassName("textpar")[currentLevel].children[step].style.display = "block";
                 }
             } else if (t == 0) {
                 startGame();
@@ -197,11 +197,11 @@ function loop() {
 
     function loadFontSettings() {
         //Get Font settings
-        if (lvl == 10) {
+        if (currentLevel == 10) {
             var temp = Math.floor(Math.random() * (font.length - 1) + 1)
             var temp2 = searchFont(font[temp])
             var str = "";
-            document.getElementsByClassName("textpar")[lvl].children[step].style.fontFamily = font[temp];
+            document.getElementsByClassName("textpar")[currentLevel].children[step].style.fontFamily = font[temp];
 
             for (var i = 0; i < fntchar[temp].length; i++) {
                 str += fntchar[temp][i] + " " + Math.random() * (temp2[1][i] - temp2[0][i]) + temp2[0][i];
@@ -209,20 +209,20 @@ function loop() {
                     str += ", ";
                 }
             }
-            document.getElementsByClassName("textpar")[lvl].children[step].style.fontVariationSettings = str;
-            document.getElementsByClassName("textpar")[lvl].children[step].innerHTML = rndword[Math.floor(Math.random() * rndword.length)];
+            document.getElementsByClassName("textpar")[currentLevel].children[step].style.fontVariationSettings = str;
+            document.getElementsByClassName("textpar")[currentLevel].children[step].innerHTML = rndword[Math.floor(Math.random() * rndword.length)];
         }
-        document.getElementById("affiche").style.fontFamily = document.getElementsByClassName("textpar")[lvl].children[step].style.fontFamily;
-        document.getElementById("affiche").style.fontVariationSettings = document.getElementsByClassName("textpar")[lvl].children[step].style.fontVariationSettings;
-        document.getElementById("affiche").innerHTML = document.getElementsByClassName("textpar")[lvl].children[step].innerHTML;
-        fout = searchFont(document.getElementsByClassName("textpar")[lvl].children[step].style.fontFamily);
+        document.getElementById("affiche").style.fontFamily = document.getElementsByClassName("textpar")[currentLevel].children[step].style.fontFamily;
+        document.getElementById("affiche").style.fontVariationSettings = document.getElementsByClassName("textpar")[currentLevel].children[step].style.fontVariationSettings;
+        document.getElementById("affiche").innerHTML = document.getElementsByClassName("textpar")[currentLevel].children[step].innerHTML;
+        fout = searchFont(document.getElementsByClassName("textpar")[currentLevel].children[step].style.fontFamily);
         prm = [];
         fonttype = [];
-        var fontvar = document.getElementsByClassName("textpar")[lvl].children[step].style.fontVariationSettings.split(", ")
+        var fontvar = document.getElementsByClassName("textpar")[currentLevel].children[step].style.fontVariationSettings.split(", ")
         for (var i = 0; i < fontvar.length; i++) {
             fontvar[i] = fontvar[i].split(" ");
         }
-        if (lvl == 0) {
+        if (currentLevel == 0) {
             fontvar = [['weight', 400]]
         }
         for (var i = 0; i < fontvar.length; i++) {
@@ -273,7 +273,7 @@ function loop() {
 
     function saveScore() {
         //Save Score/Input Time
-        if (lvl == 0) {
+        if (currentLevel == 0) {
             fontscore.push(parseInt(sldr * 3) / 3);
             score[step].push(1 - Math.abs(parseInt(sldr * 3) / 3 - prm[vari]));//1-Math.abs(sldr-prm[0])
         } else {
@@ -283,7 +283,7 @@ function loop() {
         penalty[step] += r;
         k = false;
         if (vari == fonttype.length - 1) {
-            document.getElementsByClassName("textpar")[lvl].children[step].style.display = "block";
+            document.getElementsByClassName("textpar")[currentLevel].children[step].style.display = "block";
         }
     }
 
@@ -292,12 +292,12 @@ function loop() {
         document.getElementById("slider").style.opacity = 0.3;
         document.getElementById("affiche").style.opacity = 0.3;
         document.getElementById("spacebar").style.opacity = 0.3;
-        document.getElementsByClassName("textpar")[lvl].children[step].style.display = "none";
+        document.getElementsByClassName("textpar")[currentLevel].children[step].style.display = "none";
         step++;
         fontscore = [];
         vari = 0;
         t = -200;
-        document.getElementById("headerlevel").children[0].children[1].innerHTML = step + "/" + Math.max(1, Math.min(lvl, 4));
+        document.getElementById("headerlevel").children[0].children[1].innerHTML = step + "/" + Math.max(1, Math.min(currentLevel, 4));
     }
 
     function advanceVarType() {
@@ -327,7 +327,7 @@ function loop() {
         document.getElementById("game").style.filter = "blur(8px)";
         totalscore = 0;
         for (var i = 0; i < 4; i++) {
-            if (i < Math.max(1, Math.min(lvl, 4))) {
+            if (i < Math.max(1, Math.min(currentLevel, 4))) {
                 document.getElementById("score").children[0].children[2].children[0].children[i].style.display = "block";
                 document.getElementById("score").children[0].children[2].children[1].children[i].style.display = "block";
                 document.getElementById("score").children[0].children[2].children[2].children[i].style.display = "block";
@@ -354,27 +354,27 @@ function loop() {
             totalscore += Math.ceil(scorestep / (penalty[i] + 1));
         }
         totalscore = Math.floor(totalscore / score.length);
-        document.getElementById("scoreboard").parentElement.children[0].children[0].innerHTML = " Level " + lvl + " - <strong>" + totalscore + "%</strong>";
+        document.getElementById("scoreboard").parentElement.children[0].children[0].innerHTML = " Level " + currentLevel + " - <strong>" + totalscore + "%</strong>";
         //unlock Collection
-        document.getElementsByClassName("elementmenu")[lvl].children[0].style.visibility = "visible";
-        document.getElementsByClassName("elementmenu")[lvl].children[0].innerHTML = Math.max(parseInt(document.getElementsByClassName("elementmenu")[lvl].children[0].innerHTML), totalscore) + "%";
-        document.getElementsByClassName("elementmenu")[lvl].children[1].style.fontFamily = document.getElementsByClassName("textpar")[lvl].children[0].style.fontFamily;
-        document.getElementsByClassName("elementmenu")[lvl + 1].children[1].style.textDecoration = "none";
-        document.getElementsByClassName("elementmenu")[lvl].children[1].innerHTML = lvlname[lvl];
-        document.getElementsByClassName("elementmenu")[lvl + 1].children[1].innerHTML = "Next";
+        document.getElementsByClassName("elementmenu")[currentLevel].children[0].style.visibility = "visible";
+        document.getElementsByClassName("elementmenu")[currentLevel].children[0].innerHTML = Math.max(parseInt(document.getElementsByClassName("elementmenu")[currentLevel].children[0].innerHTML), totalscore) + "%";
+        document.getElementsByClassName("elementmenu")[currentLevel].children[1].style.fontFamily = document.getElementsByClassName("textpar")[currentLevel].children[0].style.fontFamily;
+        document.getElementsByClassName("elementmenu")[currentLevel + 1].children[1].style.textDecoration = "none";
+        document.getElementsByClassName("elementmenu")[currentLevel].children[1].innerHTML = lvlname[currentLevel];
+        document.getElementsByClassName("elementmenu")[currentLevel + 1].children[1].innerHTML = "Next";
     }
 
     function waitscore() {
         if (k === false) {
             page = mode;
             //Load Scoreboard
-            scoreboard(lvl > 3);
+            scoreboard(currentLevel > 3);
             waitinput = [" ", "r", "R", "s", "S", "c", "C"];
 			stopInterval();
         } else {
             switch (k + "t") {
                 case " t":
-                    lvl++;
+                    currentLevel++;
                     mode = 0;
                     break;
                 case "Rt":
@@ -412,7 +412,7 @@ function loop() {
             } else {
                 if (document.getElementsByClassName("elementmenu")[parseInt(k)].children[1].innerHTML != "locked") {
                     mode = 0;
-                    lvl = parseInt(k);
+                    currentLevel = parseInt(k);
                 }
             }
             k = false;
