@@ -78,13 +78,17 @@ function loop() {
         document.getElementById("affiche").innerHTML = "Ready?";
         document.getElementById("affiche").style.opacity = 1;
         document.getElementById("slider").style.opacity = 1;
-        if (currentLevel == 0) {
-            document.getElementById("spacebar").innerHTML = "Touch the <strong>(screen)</strong><br>or Press <strong>(spacebar)</strong><br> to start";
+
+        var spacebarText;
+        if (currentLevel === 0) {
+            spacebarText = "Touch the <strong>(screen)</strong><br>or Press <strong>(spacebar)</strong><br> to start";
         } else if (touch) {
-            document.getElementById("spacebar").innerHTML = "Touch the <strong>(screen)</strong><br>to start";
+            spacebarText = "Touch the <strong>(screen)</strong><br>to start";
         } else {
-            document.getElementById("spacebar").innerHTML = "Press <strong>(spacebar)</strong><br>to start";
+            spacebarText = "Press <strong>(spacebar)</strong><br>to start";
         }
+        editSpacebarText(spacebarText);
+
         document.getElementById("spacebar").style.opacity = 1;
         document.getElementById("helper").style.display = "none";
         document.getElementById("helper0").style.display = "none";
@@ -125,11 +129,15 @@ function loop() {
                 document.getElementById("slider").style.opacity = 0;
                 keyPressed = false;
                 document.getElementById("spacebar").style.opacity = 1;
+
+                var spacebarText;
                 if (touch) {
-                    document.getElementById("spacebar").innerHTML = "Click the <strong>(screen)</strong><br>to continue";
+                    spacebarText = "Click the <strong>(screen)</strong><br>to continue";
                 } else {
-                    document.getElementById("spacebar").innerHTML = "Press <strong>(spacebar)</strong><br>to continue";
+                    spacebarText = "Press <strong>(spacebar)</strong><br>to continue";
                 }
+                editSpacebarText(spacebarText);
+
                 t = -1;
                 if (flash == 3) {
                     expectedInputs = [" "];
@@ -201,11 +209,15 @@ function loop() {
             document.getElementById("helper").style.display = "block";
         }
         document.getElementById("slider").style.opacity = 0;
+
+        var spacebarText;
         if (touch) {
-            document.getElementById("spacebar").innerHTML = "Click the <strong>(screen)</strong><br>to validate";
+            spacebarText = "Click the <strong>(screen)</strong><br>to validate";
         } else {
-            document.getElementById("spacebar").innerHTML = "Hit <strong>(spacebar)</strong><br>to validate";
+            spacebarText = "Hit <strong>(spacebar)</strong><br>to validate";
         }
+        editSpacebarText(spacebarText);
+
         document.getElementById("spacebar").style.opacity = 0;
         document.getElementById("affiche").style.opacity = 0;
     }
@@ -252,12 +264,19 @@ function loop() {
         document.getElementById("slider").style.marginLeft = 0 + "%";
         document.getElementById("slider").style.opacity = 1;
         document.getElementById("spacebar").style.opacity = 1;
+
+        var spacebarText;
         if (touch) {
-            document.getElementById("spacebar").innerHTML = "Click the <strong>(screen)</strong><br>to validate";
+            spacebarText = "Click the <strong>(screen)</strong><br>to validate";
         } else {
-            document.getElementById("spacebar").innerHTML = "Hit <strong>(spacebar)</strong><br>to validate";
+            spacebarText = "Hit <strong>(spacebar)</strong><br>to validate";
         }
+        editSpacebarText(spacebarText);
         keyPressed = false;
+    }
+
+    function editSpacebarText(text){
+        document.getElementById("spacebar").innerHTML = text;
     }
 
     function moveGame(flash) {
@@ -329,30 +348,28 @@ function loop() {
     }
 
     function scoreboard(bounce) {
-        if (bounce) {
-            document.getElementById("score").children[0].children[1].children[2].style.display = "block";
-            document.getElementById("score").children[0].children[2].children[2].style.display = "block";
-        } else {
-            document.getElementById("score").children[0].children[1].children[2].style.display = "none";
-            document.getElementById("score").children[0].children[2].children[2].style.display = "none";
-        }
+
+        var display = bounce ? "block": "none";
+        document.getElementById("score").children[0].children[1].children[2].style.display = display;
+        document.getElementById("score").children[0].children[2].children[2].style.display = display;
+
         document.getElementById("headerlevel").style.display = "none";
         document.getElementById("headerscore").style.display = "flex";
         document.getElementById("score").style.display = "flex";
         document.getElementById("game").style.filter = "blur(8px)";
         totalscore = 0;
         for (var i = 0; i < 4; i++) {
+
+            var displayScoreStyle = null;
             if (i < Math.max(1, Math.min(currentLevel, 4))) {
-                document.getElementById("score").children[0].children[2].children[0].children[i].style.display = "block";
-                document.getElementById("score").children[0].children[2].children[1].children[i].style.display = "block";
-                document.getElementById("score").children[0].children[2].children[2].children[i].style.display = "block";
-                document.getElementById("score").children[0].children[2].children[3].children[i].style.display = "block";
+                displayScoreStyle = "block";
             } else {
-                document.getElementById("score").children[0].children[2].children[0].children[i].style.display = "none";
-                document.getElementById("score").children[0].children[2].children[1].children[i].style.display = "none";
-                document.getElementById("score").children[0].children[2].children[2].children[i].style.display = "none";
-                document.getElementById("score").children[0].children[2].children[3].children[i].style.display = "none";
+                displayScoreStyle = "none";
             }
+            document.getElementById("score").children[0].children[2].children[0].children[i].style.display = displayScoreStyle;
+            document.getElementById("score").children[0].children[2].children[1].children[i].style.display = displayScoreStyle;
+            document.getElementById("score").children[0].children[2].children[2].children[i].style.display = displayScoreStyle;
+            document.getElementById("score").children[0].children[2].children[3].children[i].style.display = displayScoreStyle;
         }
         for (var i = 0; i < score.length; i++) {
             if (bounce == false) {
