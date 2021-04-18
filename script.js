@@ -275,7 +275,7 @@ function loop() {
         keyPressed = false;
     }
 
-    function editSpacebarText(text){
+    function editSpacebarText(text) {
         document.getElementById("spacebar").innerHTML = text;
     }
 
@@ -349,7 +349,7 @@ function loop() {
 
     function scoreboard(bounce) {
 
-        var display = bounce ? "block": "none";
+        var display = bounce ? "block" : "none";
         document.getElementById("score").children[0].children[1].children[2].style.display = display;
         document.getElementById("score").children[0].children[2].children[2].style.display = display;
 
@@ -402,7 +402,7 @@ function loop() {
             //Load Scoreboard
             scoreboard(currentLevel > 3);
             expectedInputs = [" ", "r", "R", "s", "S", "c", "C"];
-			stopInterval();
+            stopInterval();
         } else {
             switch (keyPressed + "t") {
                 case " t":
@@ -433,7 +433,7 @@ function loop() {
             document.getElementById("menu").style.display = "flex";
             document.getElementById("headercollection").style.display = "flex";
             expectedInputs = ["s", "S", "c", "C", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a"]
-			stopInterval();
+            stopInterval();
         } else {
             document.getElementById("menu").style.display = "none";
             document.getElementById("headercollection").style.display = "none";
@@ -456,7 +456,7 @@ function loop() {
             document.getElementById("settings").style.display = "flex";
             document.getElementById("headersettings").style.display = "flex";
             expectedInputs = ["c", "C", "s", "S"];
-			stopInterval();
+            stopInterval();
         } else {
             document.getElementById("settings").style.display = "none";
             document.getElementById("headersettings").style.display = "none";
@@ -480,7 +480,7 @@ function onKeyboard(event) {
 
 function onKeyPressed(key) {
     if (key == "Escape") {
-		stopInterval();
+        stopInterval();
     } else if (expectedInputs !== false) {
         processKeyPressed(key);
     } else {
@@ -490,8 +490,8 @@ function onKeyPressed(key) {
     }
 }
 
-function processKeyPressed(key){
-    if (expectedInputs.includes(key)){
+function processKeyPressed(key) {
+    if (expectedInputs.includes(key)) {
         keyPressed = key;
         intervalId = setInterval(loop, 10);
         expectedInputs = false;
@@ -500,4 +500,16 @@ function processKeyPressed(key){
 
 function touchScreen() {
     touch = true;
+}
+
+function onSettingsClick() {
+    onKeyPressed("s");
+}
+
+function onCollectionClick() {
+    onKeyPressed("c");
+}
+
+function onLevelClick(selectedLevel){
+    onKeyPressed(selectedLevel);
 }
