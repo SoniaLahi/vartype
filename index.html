@@ -9,21 +9,21 @@
 </head>
     <body onkeydown="keyboard(event)" style="font-family: 'RobotoMono';font-variation-settings: 'wght' ,'slnt' ,'opsz' ,'wdth' ;">
 		<header id="headerscore" class="header">
-		    <div onclick='keyPressed("c")'>
+		    <div onclick='onKeyPressed("c")'>
 			<p class="aligncenter"><strong> (c) </strong>to<br> collection </p>
 		    </div>
-		    <div onclick='keyPressed("s")'>
+		    <div onclick='onKeyPressed("s")'>
 		    <p class="aligncenter"><strong> (s) </strong>to<br> settings</p>
 		    </div>
 		</header>
 		<header id="headerready" class="header">
-			<div onclick='keyPressed("c")'>
+			<div onclick='onKeyPressed("c")'>
 				<p class="aligncenter"><strong> (c) </strong>to<br> collection </p>
 			</div>
 			<div style="text-align: center;font-size: clamp(1em, 2vw, 2rem); margin-top: -20px;">
 				<p>Level 0</p>
 			</div>
-			<div onclick='keyPressed("s")'>
+			<div onclick='onKeyPressed("s")'>
 			<p class="aligncenter"><strong> (s) </strong>to<br> settings </p>
 			</div>
 		</header>
@@ -32,20 +32,20 @@
 				<p style="text-align: center;font-size: clamp(1em, 2vw, 2rem); margin: 0;">Level 0</p>
 				<p style="margin: 0;">01/04</p>
 			</div>
-		</header>		
+		</header>
 		<header id="headercollection" class="header">
-			<div onclick='keyPressed("c")'>
+			<div onclick='onKeyPressed("c")'>
 				<p class="aligncenter"><strong> (c) </strong>to<br> exit </p>
 			</div>
-			<div onclick='keyPressed("s")'>
+			<div onclick='onKeyPressed("s")'>
 			<p class="aligncenter"><strong> (s) </strong>to<br> settings </p>
 			</div>
 		</header>
 		<header id="headersettings" class="header">
-			<div onclick='keyPressed("c")'>
+			<div onclick='onKeyPressed("c")'>
 				<p class="aligncenter"><strong> (c) </strong>to<br> collection </p>
 			</div>
-			<div onclick='keyPressed("s")'>
+			<div onclick='onKeyPressed("s")'>
 			<p class="aligncenter"><strong> (s) </strong>to<br> exit </p>
 			</div>
 		</header>
@@ -125,7 +125,7 @@
 				<p id="r" style="position:absolute; top:0; left:1vw; display: none;"></p>
 			</div>
 		</div>
-		
+
 		<div class="main" style="display:none"  id="score">
 			<div class="containerscore" class="settingssize">
 				<div class="elementscore">
@@ -179,109 +179,109 @@
 		</div>
 	    	<div class="main" id="settings" style="display:none">
 			<div class="containersettings" class="settingssize">
-				<div class="elementsettings">  
+				<div class="elementsettings">
 					<div class="alignleft"> Music <strong>(1)</strong>
 					</div>
 					<div class="alignright"> <strong>On</strong></div>
 				</div>
-				<div class="elementsettings">  
+				<div class="elementsettings">
 					<div class="alignleft"> Sound <strong>(2)</strong></div>
 					<div class="alignright"> <strong>Off</strong></div>
 				</div>
-				<div class="elementsettings">  
+				<div class="elementsettings">
 					<div class="alignleft"> Color <strong>(3)</strong></div>
-					<div class="alignright" style="background-color: black;height: 30px;width: 60px;border: 2px solid #000;"></div> 
+					<div class="alignright" style="background-color: black;height: 30px;width: 60px;border: 2px solid #000;"></div>
 				</div>
-				<div class="elementsettings">  
+				<div class="elementsettings">
 					<div class="alignleft"> Background Color <strong>(4)</strong></div>
 					<div class="alignright" style="background-color: white;height: 30px;width: 60px;border: 2px solid #000;"></div>
 				</div>
-				<div class="elementsettings">  
+				<div class="elementsettings">
 					<div class="alignleft"> FontFamily <strong>(5)</strong>
 					</div>
 					<div class="alignright"> <strong>Roboto Mono</strong>
 					</div>
 				</div>
-				<div class="elementsettings" style="margin: 0;">  
+				<div class="elementsettings" style="margin: 0;">
 					<div class="alignleft"> Width  <strong>(6)</strong></div>
 					<input type="range" class="alignright" >
 				</div>
-				<div class="elementsettings" style="margin: 0;">  
+				<div class="elementsettings" style="margin: 0;">
 					<div class="alignleft"> Height <strong>(7)</strong></div>
 					<input type="range" class="alignright">
 				</div>
-				<div class="elementsettings" style="margin: 0;">  
+				<div class="elementsettings" style="margin: 0;">
 					<div class="alignleft"> Italic <strong>(8)</strong></div>
 					<input type="range" class="alignright">
 				</div>
-				<div class="elementsettings" style="margin: 0;">  
+				<div class="elementsettings" style="margin: 0;">
 					<div class="alignleft"> Optical <strong>(9)</strong></div>
 					<input type="range" class="alignright">
 				</div>
 			</div>
 		</div>
-	    	
+
 		<div class="main" id="menu" style="display:none;">
 			<div class="containermenu" class="settingssize">
-				<div class="elementmenu" onclick='keyPressed("0")'>
+				<div class="elementmenu" onclick='onKeyPressed("0")'>
 					<div class="niveaucard" style="visibility:hidden;font-size: 2em">0%</div>
 					<div class="niveaucard">locked</div>
 					<div class="niveaucard"><strong>(0)</strong></div>
 				</div>
-				<div class="elementmenu" onclick='keyPressed("1")'>
+				<div class="elementmenu" onclick='onKeyPressed("1")'>
 					<div class="niveaucard" style="visibility:hidden;font-size: 2em">0%</div>
 					<div class="niveaucard" style="text-decoration: line-through;">locked</div>
-					<div class="niveaucard"><strong>(1)</strong></div>    
+					<div class="niveaucard"><strong>(1)</strong></div>
 				</div>
-				<div class="elementmenu" onclick='keyPressed("2")'>
+				<div class="elementmenu" onclick='onKeyPressed("2")'>
 					<div class="niveaucard" style="visibility:hidden;font-size: 2em">0%</div>
 					<div class="niveaucard" style="text-decoration: line-through;">locked</div>
-					<div class="niveaucard"><strong>(2)</strong></div>    
+					<div class="niveaucard"><strong>(2)</strong></div>
 				</div>
-				<div class="elementmenu" onclick='keyPressed("3")'>
+				<div class="elementmenu" onclick='onKeyPressed("3")'>
 					<div class="niveaucard" style="visibility:hidden;font-size: 2em">0%</div>
 					<div class="niveaucard" style="text-decoration: line-through;">locked</div>
-					<div class="niveaucard"><strong>(3)</strong></div>    
+					<div class="niveaucard"><strong>(3)</strong></div>
 				</div>
-				<div class="elementmenu" onclick='keyPressed("4")'>
+				<div class="elementmenu" onclick='onKeyPressed("4")'>
 					<div class="niveaucard" style="visibility:hidden;font-size: 2em">0%</div>
 					<div class="niveaucard" style="text-decoration: line-through;">locked</div>
-					<div class="niveaucard"><strong>(4)</strong></div>    
+					<div class="niveaucard"><strong>(4)</strong></div>
 				</div>
-				<div class="elementmenu" onclick='keyPressed("5")'>
+				<div class="elementmenu" onclick='onKeyPressed("5")'>
 					<div class="niveaucard" style="visibility:hidden;font-size: 2em">0%</div>
 					<div class="niveaucard" style="text-decoration: line-through;">locked</div>
-					<div class="niveaucard"><strong>(5)</strong></div>    
+					<div class="niveaucard"><strong>(5)</strong></div>
 				</div>
-				<div class="elementmenu" onclick='keyPressed("6")'>
+				<div class="elementmenu" onclick='onKeyPressed("6")'>
 					<div class="niveaucard" style="visibility:hidden;font-size: 2em">0%</div>
 					<div class="niveaucard" style="text-decoration: line-through;">locked</div>
-					<div class="niveaucard"><strong>(6)</strong></div>    
+					<div class="niveaucard"><strong>(6)</strong></div>
 				</div>
-				<div class="elementmenu" onclick='keyPressed("7")'>
+				<div class="elementmenu" onclick='onKeyPressed("7")'>
 					<div class="niveaucard" style="visibility:hidden;font-size: 2em">0%</div>
 					<div class="niveaucard" style="text-decoration: line-through;">locked</div>
-					<div class="niveaucard"><strong>(7)</strong></div>    
+					<div class="niveaucard"><strong>(7)</strong></div>
 				</div>
-				<div class="elementmenu" onclick='keyPressed("8")'>
+				<div class="elementmenu" onclick='onKeyPressed("8")'>
 					<div class="niveaucard" style="visibility:hidden;font-size: 2em;">0%</div>
 					<div class="niveaucard" style="text-decoration: line-through;">locked</div>
-					<div class="niveaucard"><strong>(8)</strong></div>    
+					<div class="niveaucard"><strong>(8)</strong></div>
 				</div>
-				<div class="elementmenu" onclick='keyPressed("9")'>
+				<div class="elementmenu" onclick='onKeyPressed("9")'>
 					<div class="niveaucard" style="visibility:hidden;font-size: 2em;">0%</div>
 					<div class="niveaucard" style="text-decoration: line-through;">locked</div>
-					<div class="niveaucard"><strong>(9)</strong></div>    
+					<div class="niveaucard"><strong>(9)</strong></div>
 				</div>
-				<div class="elementmenu" onclick='keyPressed("a")'>
+				<div class="elementmenu" onclick='onKeyPressed("a")'>
 					<div class="niveaucard" style="visibility:hidden;font-size: 2em;">0%</div>
 					<div class="niveaucard" style="text-decoration: line-through;">locked</div>
-					<div class="niveaucard"><strong>(a)</strong></div>    
+					<div class="niveaucard"><strong>(a)</strong></div>
 				</div>
 				<div class="elementmenu">
 					<div class="niveaucard" style="visibility:hidden;font-size: 2em;">0%</div>
 					<div class="niveaucard" style="text-decoration: line-through;">locked</div>
-					<div class="niveaucard"><strong>(b)</strong></div>    
+					<div class="niveaucard"><strong>(b)</strong></div>
 				</div>
 			</div>
 		</div>

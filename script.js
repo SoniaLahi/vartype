@@ -1,7 +1,22 @@
-var k = false;
+var keyPressed = false;
 var intervalId = setInterval(loop, 20);
-var touch = false, t = 0, sldr, r, currentLevel = 0, step = 0, score = [], penalty = [], prm = [], str, mode = 0, fonttype, vari = 0, totalscore, waitinput = false,
-    fontscore = [], page;
+var touch = false,
+    t = 0,
+    sldr,
+    r,
+    currentLevel = 0,
+    step = 0,
+    score = [],
+    penalty = [],
+    prm = [],
+    str,
+    mode = 0,
+    fonttype,
+    vari = 0,
+    totalscore,
+    expectedInputs = false,
+    fontscore = [],
+    page;
 var font = ['Roboto', 'RobotoMono', 'EBGaramond-VariableFont_wght', 'Quicksand-VariableFont_wght', 'Hagrid-Variable-trial', 'Minerale-variable-TRIAL', 'InterVar', 'Blacker-Sans-Variable-trial', 'GTFlexa', 'Compressa'];
 var lvlname = ['Roboto', 'RobotoMono', 'EBGaramond', 'Quicksand', 'Hagrid', 'Minérale', 'Inter', 'Blacker', 'GTFlexa', 'Compressa', 'Random'];
 var fmin = [[300], [100], [400], [300], [100], [0], [100, 0], [50, 100], [0, 100, 0], [10, 100]];
@@ -33,7 +48,7 @@ function loop() {
             continueLevel(currentLevel < 4);
             if (step == Math.max(1, Math.min(currentLevel, 4))) {
                 mode++;
-                k = false;
+                keyPressed = false;
             }
             break;
         case 4:
@@ -53,7 +68,7 @@ function loop() {
     function loadReady() {
         //Load Ready?
         step = 0;
-        k = false;
+        keyPressed = false;
         t = 0;
         score = [];
         penalty = [];
@@ -79,7 +94,7 @@ function loop() {
         t++;
         sldr = -Math.cos(t / 200 * Math.PI) / 2 + .5;
         document.getElementById("slider").style.marginLeft = sldr * 100 + "%";
-        if (k === " ") {
+        if (keyPressed === " ") {
             mode++;
             t = -200;
             document.getElementById("headerready").style.display = "none";
@@ -87,17 +102,17 @@ function loop() {
             document.getElementById("headerlevel").children[0].children[0].innerHTML = "Level " + currentLevel;
             document.getElementById("headerlevel").children[0].children[1].innerHTML = 0 + "/" + Math.max(1, Math.min(currentLevel, 4));
         }
-        if (k == "s" || k == "S") {
+        if (keyPressed == "s" || keyPressed == "S") {
             document.getElementById("headerready").style.display = "none";
             document.getElementById("game").style.filter = "blur(8px)";
             mode = 6;
-            k = false;
+            keyPressed = false;
         }
-        if (k == "c" || k == "C") {
+        if (keyPressed == "c" || keyPressed == "C") {
             document.getElementById("headerready").style.display = "none";
             document.getElementById("game").style.filter = "blur(8px)";
             mode = 5;
-            k = false;
+            keyPressed = false;
         }
     }
 
@@ -108,7 +123,7 @@ function loop() {
                 loadFontSettings();
                 document.getElementById("affiche").style.opacity = 1;
                 document.getElementById("slider").style.opacity = 0;
-                k = false;
+                keyPressed = false;
                 document.getElementById("spacebar").style.opacity = 1;
                 if (touch) {
                     document.getElementById("spacebar").innerHTML = "Click the <strong>(screen)</strong><br>to continue";
@@ -117,7 +132,7 @@ function loop() {
                 }
                 t = -1;
                 if (flash == 3) {
-                    waitinput = [" "];
+                    expectedInputs = [" "];
                     stopInterval();
                 } else {
                     document.getElementsByClassName("textpar")[currentLevel].children[step].style.display = "block";
@@ -149,7 +164,7 @@ function loop() {
         }
 
         if (0 < t) {
-            if (k === " ") {
+            if (keyPressed === " ") {
                 saveScore();
                 mode++;
                 t = 0;
@@ -162,7 +177,7 @@ function loop() {
     function continueLevel(wait) {
         if (wait && t == 0) {
             t = 100
-            waitinput = [" "];
+            expectedInputs = [" "];
             stopInterval();
         } else if (t == 100) {
             if (vari == fonttype.length - 1) {
@@ -242,7 +257,7 @@ function loop() {
         } else {
             document.getElementById("spacebar").innerHTML = "Hit <strong>(spacebar)</strong><br>to validate";
         }
-        k = false;
+        keyPressed = false;
     }
 
     function moveGame(flash) {
@@ -281,7 +296,7 @@ function loop() {
             score[step].push(1 - Math.abs(sldr - prm[vari]));//1-Math.abs(sldr-prm[0])
         }
         penalty[step] += r;
-        k = false;
+        keyPressed = false;
         if (vari == fonttype.length - 1) {
             document.getElementsByClassName("textpar")[currentLevel].children[step].style.display = "block";
         }
@@ -365,14 +380,14 @@ function loop() {
     }
 
     function waitscore() {
-        if (k === false) {
+        if (keyPressed === false) {
             page = mode;
             //Load Scoreboard
             scoreboard(currentLevel > 3);
-            waitinput = [" ", "r", "R", "s", "S", "c", "C"];
+            expectedInputs = [" ", "r", "R", "s", "S", "c", "C"];
 			stopInterval();
         } else {
-            switch (k + "t") {
+            switch (keyPressed + "t") {
                 case " t":
                     currentLevel++;
                     mode = 0;
@@ -392,77 +407,80 @@ function loop() {
             }
             document.getElementById("headerscore").style.display = "none";
             document.getElementById("score").style.display = "none";
-            k = false;
+            keyPressed = false;
         }
     }
 
     function loadCollection() {
-        if (k === false) {
+        if (keyPressed === false) {
             document.getElementById("menu").style.display = "flex";
             document.getElementById("headercollection").style.display = "flex";
-            waitinput = ["s", "S", "c", "C", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a"]
+            expectedInputs = ["s", "S", "c", "C", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a"]
 			stopInterval();
         } else {
             document.getElementById("menu").style.display = "none";
             document.getElementById("headercollection").style.display = "none";
-            if (k == "c" || k == "C") {
+            if (keyPressed == "c" || keyPressed == "C") {
                 mode = page;
-            } else if (k == "s" || k == "S") {
+            } else if (keyPressed == "s" || keyPressed == "S") {
                 mode = 6;
             } else {
-                if (document.getElementsByClassName("elementmenu")[parseInt(k)].children[1].innerHTML != "locked") {
+                if (document.getElementsByClassName("elementmenu")[parseInt(keyPressed)].children[1].innerHTML != "locked") {
                     mode = 0;
-                    currentLevel = parseInt(k);
+                    currentLevel = parseInt(keyPressed);
                 }
             }
-            k = false;
+            keyPressed = false;
         }
     }
 
     function loadSettings() {
-        if (k === false) {
+        if (keyPressed === false) {
             document.getElementById("settings").style.display = "flex";
             document.getElementById("headersettings").style.display = "flex";
-            waitinput = ["c", "C", "s", "S"];
+            expectedInputs = ["c", "C", "s", "S"];
 			stopInterval();
         } else {
             document.getElementById("settings").style.display = "none";
             document.getElementById("headersettings").style.display = "none";
-            if (k == "s" || k == "S") {
+            if (keyPressed == "s" || keyPressed == "S") {
                 mode = page;
-            } else if (k == "c" || k == "C") {
+            } else if (keyPressed == "c" || keyPressed == "C") {
                 mode = 5;
             }
-            k = false;
+            keyPressed = false;
         }
     }
 }
 
 function Click() {
-    keyPressed(" ");
+    onKeyPressed(" ");
 }
 
 function keyboard(event) {
-    keyPressed(event.key);
+    onKeyPressed(event.key);
 }
 
-function keyPressed(key) {
+function onKeyPressed(key) {
     if (key == "Escape") {
 		stopInterval();
-    } else if (waitinput !== false) {
-        for (var i = 0; i < waitinput.length; i++) {
-            if (key === waitinput[i]) {
-                k = key;
-                intervalId = setInterval(loop, 10);
-                waitinput = false;
-            }
-        }
+    } else if (expectedInputs !== false) {
+        processKeyPressed(key);
     } else {
-        if (k === false) {
-            k = key;
+        if (keyPressed === false) {
+            keyPressed = key;
         }
     }
 }
+
+function processKeyPressed(key){
+    if (expectedInputs.includes(key)){
+        keyPressed = key;
+        intervalId = setInterval(loop, 10);
+        expectedInputs = false;
+    }
+}
+
 function touchScreen() {
     touch = true;
 }
